@@ -1,3 +1,4 @@
+const { signinController } = require("./controllers");
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs");
 
 
@@ -19,10 +20,7 @@ const startServer = async () => {
 
 
 
-        app.post('/auth/signin', (req, res) => {
-            console.log("received in signin");
-            console.log(req.body);
-        })
+        app.post('/auth/signin', signinController);
 
 
 
