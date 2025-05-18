@@ -1,4 +1,4 @@
-const mongoose = require("../../utils/libs");
+const { mongoose, validator } = require("../../utils/libs");
 
 const userSchema = new mongoose.Schema({
     firstname: {
@@ -53,3 +53,5 @@ const userSchema = new mongoose.Schema({
 });
 
 const userModel = mongoose.model('user', userSchema);
+
+module.exports = userModel;

@@ -1,3 +1,4 @@
+const { dbConnect } = require("./config");
 const { signinController } = require("./controllers");
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs");
 
@@ -6,7 +7,7 @@ const startServer = async () => {
     try {
         const app = express();
 
-        // start database connection here
+        await dbConnect();
 
         app.use(express.json());
         app.use(cookieParser());
@@ -19,6 +20,8 @@ const startServer = async () => {
         }));
 
 
+        
+        /** Routes */
 
         app.post('/auth/signin', signinController);
 

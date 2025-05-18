@@ -1,9 +1,11 @@
+const userModel = require("../../models/user/userModel");
+const { findUser } = require("../../services");
+
 const signinController = async (req, res) => {
     try {
-
-        console.log("signin controller test");
-        const user = await findUser(req.body.username, req.body.password);
-        console.log(user);
+        const { username, password } = req.body;
+        
+        const user = await findUser(username, password);
     } catch (err) {
         console.log(signinController);
         console.log(err);
