@@ -4,7 +4,7 @@ const findUser = async (username, password) => {
 
     const user = await userModel.find({username});
 
-    console.log(user);
+    return user;
 }
 
 module.exports = findUser;
