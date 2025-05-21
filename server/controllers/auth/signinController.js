@@ -1,26 +1,24 @@
 const userModel = require("../../models/user/userModel");
 const { findUser } = require("../../services");
+const NotFoundError = require("../../utils/errors/notFoundError");
+const { createAccessToken } = require("../../utils/token");
 
-const signinController = async (req, res) => {
+const signinController = async (req, res, next) => {
     try {
         const { username, password } = req.body;
         
         const user = await findUser(username, password);
 
         if (!user) {
-            throw new notFoundError("user not found");
+            throw new NotFoundError(
+                "User not found",
+                "Error thrown after user not found in the database",
+            );
         }
 
-        return user;
-        
+
     } catch (err) {
-        return res.status(err.status || 500).json({
-            message: err.message || 'InternalServerError',
-            error: {
-                name: err.name || 'Internal Server Error',
-                message: 
-            }
-        })
+        next(err);
     }
 }
 

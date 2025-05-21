@@ -1,4 +1,4 @@
-const userAuthMiddleware = async (req, res, next) => {
+const userAuthMiddleware = async (err, req, res, next) => {
     console.log("user auth middleware test");
 }
 

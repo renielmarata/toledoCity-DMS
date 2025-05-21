@@ -4,7 +4,9 @@ const dotenv = require('dotenv').config();
 const cookieParser = require('cookie-parser');
 const helmet = require('helmet');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 const validator = require('validator');
+const bcrypt = require("bcrypt");
 
 
 module.exports = {
@@ -14,5 +16,7 @@ module.exports = {
     cookieParser,
     helmet,
     cors,
+    jwt,
     validator,
+    bcrypt,
 }

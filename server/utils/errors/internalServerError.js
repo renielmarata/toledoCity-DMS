@@ -1,10 +1,14 @@
 class InternalServerError extends Error {
-    constructor(message) {
+    constructor(message, details) {
         super(message);
         this.name = 'InternalServerError';
-        this.statusCode = 500;
-        this.status = 'error';
+        this.details = details;
+        this.code = 500;
+        
 
         Error.captureStackTract(this, this.constructor);
     }
 }
+
+
+module.exports = InternalServerError;

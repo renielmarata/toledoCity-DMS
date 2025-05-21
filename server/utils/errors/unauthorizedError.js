@@ -1,10 +1,14 @@
 class UnauthorizedError extends Error {
-    constructor(message) {
+    constructor(message, details) {
         super(message);
         this.name = 'Unauthorized',
-        this.statusCode = 401;
-        this.status = 'fail';
+        this.details = details;
+        this.code = 401;
+        
 
         Error.captureStackTrace(this, this.constructor);
     }
 }
+
+
+module.exports = UnauthorizedError;

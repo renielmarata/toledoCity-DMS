@@ -1,5 +1,6 @@
 const { dbConnect } = require("./config");
 const { signinController } = require("./controllers");
+const { errorHandler } = require("./middleware");
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs");
 
 
@@ -25,12 +26,14 @@ const startServer = async () => {
 
         app.post('/auth/signin', signinController);
 
+        app.use(errorHandler);
 
 
 
         app.listen(process.env.PORT || 5000, ()=>{
             console.log("Listen at PORT:"+process.env.PORT);
         })
+
     } catch (err) {
         console.log(err);
         // send error response here
