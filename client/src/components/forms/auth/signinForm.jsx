@@ -1,9 +1,10 @@
 import { Link as RouterLink } from "react-router-dom";
-import { Button, Container, FormControl, FormGroup, Link, Stack, TextField, Typography } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { Alert, Button, Container, FormControl, FormGroup, Link, Stack, TextField, Typography } from '@mui/material';
 import { styled } from "@mui/system";
 import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { signinRequest } from "../../../api";
+import { useAuthContext } from "../../../context/auth/authProvider";
 
 
 
@@ -27,6 +28,9 @@ const CustomLink = styled(Link)(()=>({
 }))
 
 const SigninForm = () => {
+    const { errorMessage, signinRequest } = useAuthContext();
+    const navigate = useNavigate();
+
     const signinSchema = Yup.object({
         username: Yup.string()
         .typeError('invalid text')
@@ -49,14 +53,22 @@ const SigninForm = () => {
                 validationSchema={signinSchema}
                 validateOnBlur={false}
                 validateOnChange={false}
-                onSubmit={(values)=>{
-                    signinRequest(values);
+                onSubmit={ async (values)=>{
+                    const res = await signinRequest(values);
+                    if (res.status === 200 && res.data.success) {
+                        navigate('/dashboard');
+                    }
                 }}
                 
             >
                 {({ errors, touched })=>(
                     <Form>
+                        
                         <FormHeader> Signin </FormHeader>
+
+                        { errorMessage && <Alert severity="error" sx={{marginBottom: '10px'}}>
+                            {errorMessage}
+                        </Alert> }
 
                         <Stack direction="column" gap={3}>
                             <Field
