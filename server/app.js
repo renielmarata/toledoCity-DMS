@@ -25,6 +25,9 @@ const startServer = async () => {
         /** Routes */
 
         app.post('/auth/signin', signinController);
+        app.post('/auth/checkAuth', (req, res) => {
+            // access token and refresh token
+        })
 
         app.use(errorHandler);
 

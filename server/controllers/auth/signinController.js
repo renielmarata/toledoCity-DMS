@@ -12,7 +12,7 @@ const signinController = async (req, res, next) => {
 
         if (!user) {
             throw new notFoundError(
-                "User not found",
+                "Wrong username or password",
                 "Given credentials do not match any user",
             );
         }

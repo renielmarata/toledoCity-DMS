@@ -1,5 +1,6 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import signinService from "../../services/auth/signinService";
+import { checkAuth } from "../../services";
 
 const AuthContext = createContext();
 
@@ -10,6 +11,19 @@ export const useAuthContext = () => {
 const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
+
+    useEffect(() => {
+        const check = async () => {
+            try {
+                const res = await checkAuth();
+                console.log(res);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+
+        check();
+    },[])
 
   
     const signinRequest = async ({ username, password }) => {

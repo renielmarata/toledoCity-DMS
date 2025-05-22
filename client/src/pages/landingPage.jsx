@@ -3,7 +3,6 @@ import { styled } from "@mui/system";
 import { SigninForm } from "../components";
 
 const LandingPageContainer = styled (Container)(()=>({
-    border: '1px solid green',
     height: '100vh',
     display: 'flex',
     alignItems: 'center',
