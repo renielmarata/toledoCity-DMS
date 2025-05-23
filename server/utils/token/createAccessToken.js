@@ -6,7 +6,7 @@ const createAccessToken = ({id, username}) => {
         { id, username },
         process.env.SECRET_KEY,
         {
-            expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
+            expiresIn: '7m',
         }
     )
 }
