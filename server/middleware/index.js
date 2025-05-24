@@ -1,11 +1,10 @@
 const errorHandler = require("./errorHandler");
 
-/** auth */
-const userAuthMiddleware = require("./auth/userAuthMiddleware");
-
+/** token */
+const authAccessToken = require("./auth/authAccessToken");
 
 module.exports = {
     errorHandler,
-    
-    userAuthMiddleware,
+
+    authAccessToken,
 }

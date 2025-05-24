@@ -1,9 +1,7 @@
 const createAccessToken = require('./createAccessToken');
 const createRefreshToken = require('./createRefreshToken');
 
-const verifyAccessToken = require("./verifyAccesToken");
-const verifyRefreshToken = require("./verifyRefreshToken");
-
+const verifyAccessToken = require('./verifyAccessToken');
 
 
 
@@ -12,5 +10,6 @@ module.exports = {
     createRefreshToken,
 
     verifyAccessToken,
-    verifyRefreshToken,
+
+
 }
