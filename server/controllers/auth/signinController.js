@@ -3,6 +3,7 @@ const userModel = require("../../models/user/userModel");
 const { findUser } = require("../../services");
 const { notFoundError } = require("../../utils/errors");
 const { createAccessToken, createRefreshToken } = require("../../utils/token");
+const { cookieNames } = require("../../config");
 
 const signinController = async (req, res, next) => {
     try {
@@ -28,14 +29,14 @@ const signinController = async (req, res, next) => {
         const accessToken = createAccessToken(user);
         const refreshToken = createRefreshToken(user);
 
-        res.cookie('toledo_accessToken', accessToken, {
+        res.cookie(cookieNames.ACCESS_TOKEN, accessToken, {
             httpOnly: true,
             securet: process.env.NODE_ENV === "production",
             sameSite: true,
             maxAge: 3 * 60 * 60 * 1000,
         })
 
-        res.cookie('toledo_refreshToken', refreshToken, {
+        res.cookie(cookieNames.REFRESH_TOKEN, refreshToken, {
             httpOnly: true,
             secure: process.env.NODE_ENV === "production",
             sameSite: true,

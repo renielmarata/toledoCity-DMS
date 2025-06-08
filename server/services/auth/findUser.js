@@ -3,17 +3,15 @@ const { bcrypt } = require("../../utils/libs");
 
 const findUser = async (username, password) => {
 
-    const data = await userModel.find({username});
+    const user = await userModel.findOne({ username });
 
-    for (const user of data) {
-        const isMatch = await bcrypt.compare(password, user.password);
-
-        if (isMatch){
-            return user;
-        }
+    if (!user) {
+        return null;
     }
 
-    return null;
+    const isMatch = await bcrypt.compare(password, user?.password);
+
+    return isMatch ? user : null;
 
 }
 

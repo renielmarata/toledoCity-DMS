@@ -1,12 +1,22 @@
+const { getUser } = require("../../services");
 const { unauthorizedError } = require("../../utils/errors");
-const { jwt, dotenv } = require("../../utils/libs");
 
 const checkAuthController = async (req, res, next) => {
     try {
-        console.log("check auth controller");
+      const user = await getUser(req.user.id);
 
+      if (!user) {
+        throw new unauthorizedError(
+          "User not found",
+          "The user not found during getUser service call",
+        )
+      }
 
-        
+      return res.status(200).json({
+        success: true,
+        message: "User is authenticated",
+        user,
+      })
 
     } catch (err) {
         next(err);

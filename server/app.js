@@ -1,6 +1,6 @@
 const { dbConnect } = require("./config");
-const { signinController, checkAuthController } = require("./controllers");
-const { errorHandler, authAccessToken } = require("./middleware");
+const { errorHandler } = require("./middleware");
+const { signinRouter, checkAuthRouter } = require("./routes");
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs");
 
 
@@ -24,8 +24,13 @@ const startServer = async () => {
         
         /** Routes */
 
-        app.post('/auth/signin', signinController);
-        app.post('/auth/checkAuth', authAccessToken, checkAuthController);
+        app.use(signinRouter);
+
+        
+        app.use(signinRouter);
+        app.use(checkAuthRouter);
+
+        
 
         app.use(errorHandler);
 

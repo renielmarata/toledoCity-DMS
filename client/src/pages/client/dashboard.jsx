@@ -1,6 +1,6 @@
 import { Container } from "@mui/material";
 import { styled } from "@mui/system";
-import { UserSidebar } from "../../components";
+import { ClientSidebar } from "../../components";
 
 const DashboardContainer = styled (Container)(()=>({
     border: '1px solid blue',
@@ -12,7 +12,7 @@ const DashboardContainer = styled (Container)(()=>({
 const Dashboard = () => {
     return ( 
         <DashboardContainer maxWidth disableGutters>
-            <UserSidebar/>
+            <ClientSidebar/>
         </DashboardContainer>
      );
 }

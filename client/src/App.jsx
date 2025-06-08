@@ -1,5 +1,5 @@
 import { Routes, Route } from "react-router-dom";
-import { AppLayout } from "./components";
+import { AppLayout, PrivateRoute } from "./components";
 import { LandingPage, UserDashboard } from "./pages";
 
 
@@ -8,7 +8,10 @@ const App = () => {
         <Routes>
             <Route element={<AppLayout/>}>
                 <Route index element={<LandingPage/>}/>
-                <Route path="/user/dashboard" element={<UserDashboard/>}/>
+
+                <Route element={<PrivateRoute/>}>
+                    <Route path="/client/dashboard" element={<UserDashboard/>}/>
+                </Route>
             </Route>
         </Routes>
      );

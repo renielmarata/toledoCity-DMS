@@ -2,13 +2,13 @@
 const dbConnect = require("./database/dbConnect");
 
 /** tokens */
-const tokenNames = require('./tokenNames.js');
+const cookieNames = require('./cookieNames.js');
 
 
 
 
 module.exports = {
     dbConnect,
-    tokenNames,
+    cookieNames,
 
 }

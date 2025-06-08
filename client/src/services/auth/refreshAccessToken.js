@@ -1,10 +1,10 @@
 import { apiEndPoints, axiosInstance } from "../../api"
 
-const checkAuth = async () => {
+const checkRefreshToken = async () => {
     return axiosInstance.post(
         apiEndPoints.auth.checkAuth,
     )
 }
 
 
-export default checkAuth;
+export default checkRefreshToken;

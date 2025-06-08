@@ -1,12 +1,12 @@
-const { tokenNames } = require("../../config");
 const { unauthorizedError } = require("../../utils/errors");
 const { jwt, dotenv } = require("../../utils/libs");
 const { verifyAccessToken } = require("../../utils/token");
+const { cookieNames } = require("../../config");
 
 
 const authAccessToken = async (req, res, next) => {
     try {
-        const accessToken = tokenNames.ACCESS_TOKEN;
+        const accessToken = cookieNames.ACCESS_TOKEN;
 
         const token = req?.cookies?.[accessToken];
 
@@ -17,11 +17,9 @@ const authAccessToken = async (req, res, next) => {
 
 
         try {
-            const decoded = jwt.verify(token, process.env.SECRET_KEY);
+            const decoded = verifyAccessToken(token);
+            req.user = decoded;
             console.log('valid access token');
-
-            req[accessToken] = decoded;
-            return next();
 
         } catch (err) {
             if (err.name !== 'TokenExpiredError') {
@@ -29,6 +27,8 @@ const authAccessToken = async (req, res, next) => {
                     'invalid token',
                     'invalid access token '+err.name,
                 )
+            } else {
+                console.log('accessToken '+err.name);
             }
         }
 

@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import signinService from "../../services/auth/signinService";
-import { checkAuth } from "../../services";
+import { checkAuthService } from "../../services";
 
 const AuthContext = createContext();
 
@@ -13,17 +13,24 @@ const AuthProvider = ({ children }) => {
     const [errorMessage, setErrorMessage] = useState(false);
 
     useEffect(() => {
-        const check = async () => {
+        const checkAuth = async () => {
             try {
-                const res = await checkAuth();
+                const res = await checkAuthService();
                 console.log(res);
+                if (res.status === 200 && res.data.success) {
+                    setIsAuthenticated(true);
+                } else {
+                    setIsAuthenticated(false);
+                }
             } catch (err) {
-                console.log(err);
+                console.log("checkAuth() -> "+err);
+                setIsAuthenticated(false);
             }
         }
 
-        check();
-    },[])
+        checkAuth();
+    }, []);
+
 
   
     const signinRequest = async ({ username, password }) => {

@@ -5,6 +5,7 @@ const errorHandler = (err, req, res, next) => {
     console.log('error message -> '+err.message);
     console.log('error details -> '+err.details);
     console.log("-------------------------------");
+    console.log(err);
 
     return res.status(err.code || 500).json({
         success: false,
