@@ -1,6 +1,6 @@
 const { dbConnect } = require("./config");
-const { errorHandler } = require("./middleware");
-const { signinRouter, checkAuthRouter } = require("./routes");
+const { errorHandlerMiddleware } = require("./middleware");
+const { signinRouter, checkAuthRouter, refreshRouter } = require("./routes");
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs");
 
 
@@ -28,11 +28,12 @@ const startServer = async () => {
 
         
         app.use(signinRouter);
+
         app.use(checkAuthRouter);
 
         
 
-        app.use(errorHandler);
+        app.use(errorHandlerMiddleware);
 
 
 

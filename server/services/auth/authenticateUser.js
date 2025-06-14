@@ -1,7 +1,7 @@
 const userModel  = require("../../models/user/userModel");
 const { bcrypt } = require("../../utils/libs");
 
-const findUser = async (username, password) => {
+const authenticatedUser = async (username, password) => {
 
     const user = await userModel.findOne({ username });
 
@@ -15,4 +15,4 @@ const findUser = async (username, password) => {
 
 }
 
-module.exports = findUser;
+module.exports = authenticatedUser;

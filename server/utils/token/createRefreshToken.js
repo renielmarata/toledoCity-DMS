@@ -1,11 +1,11 @@
 const { jwt } = require("../libs")
 
-const createRefreshToken = ({id}) => {
+const createRefreshToken = (id, username) => {
     return jwt.sign(
-        { id },
+        { id, username },
         process.env.SECRET_KEY,
         {
-            expiresIn: process.env.REFRESH_TOKEN_EXPIRES_IN,
+            expiresIn: '7d',
         }
     )
 }

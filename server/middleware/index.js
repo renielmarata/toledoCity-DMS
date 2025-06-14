@@ -1,12 +1,17 @@
-const errorHandler = require("./errorHandler");
+const errorHandlerMiddleware = require("./errorHandlermiddleware.js");
+
+/** validator */
+const validatorMiddleware = require("./validatorMiddleware.js");
 
 /** token */
-const authAccessToken = require("./auth/authAccessToken");
-const authRefreshToken = require("./auth/authRefreshToken");
+const authAccessTokenMiddleware = require("./auth/authAccessTokenMiddleware.js");
+const authRefreshTokenMiddleware = require("./auth/authRefreshTokenMiddleware.js");
 
 module.exports = {
-    errorHandler,
+    errorHandlerMiddleware,
 
-    authAccessToken,
-    authRefreshToken,
+    validatorMiddleware,
+
+    authAccessTokenMiddleware,
+    authRefreshTokenMiddleware,
 }

@@ -7,6 +7,7 @@ const cors = require('cors');
 const jwt = require('jsonwebtoken');
 const validator = require('validator');
 const bcrypt = require("bcrypt");
+const Joi = require("joi");
 
 
 module.exports = {
@@ -19,4 +20,5 @@ module.exports = {
     jwt,
     validator,
     bcrypt,
+    Joi,
 }

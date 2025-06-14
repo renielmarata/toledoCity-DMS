@@ -1,8 +1,8 @@
 
 const apiEndPoints = {
     auth: {
-      checkAuth: '/auth/me',
-      refresh: '/auth/refresh',
+      checkAuth: '/auth/checkAuth',
+      refreshAccessToken: '/auth/refreshAccessToken',
       signin: '/auth/signin',
     },
   };

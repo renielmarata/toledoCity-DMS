@@ -4,27 +4,30 @@ import { checkAuthService } from "../../services";
 
 const AuthContext = createContext();
 
-export const useAuthContext = () => {
+export const UseAuthContext = () => {
     return useContext(AuthContext);
 }
 
 const AuthProvider = ({ children }) => {
     const [isAuthenticated, setIsAuthenticated] = useState(false);
     const [errorMessage, setErrorMessage] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
         const checkAuth = async () => {
             try {
                 const res = await checkAuthService();
-                console.log(res);
-                if (res.status === 200 && res.data.success) {
+                if (res.status === 200) {
                     setIsAuthenticated(true);
+                    console.log("isAuthenticated is set to -> "+isAuthenticated);
                 } else {
                     setIsAuthenticated(false);
                 }
             } catch (err) {
                 console.log("checkAuth() -> "+err);
                 setIsAuthenticated(false);
+            } finally {
+                setLoading(false);
             }
         }
 
@@ -49,6 +52,8 @@ const AuthProvider = ({ children }) => {
         } catch(err) {
             setIsAuthenticated(false);
             setErrorMessage(err.response.data.error.message);
+        } finally {
+            setLoading(false);
         }
 
     }
@@ -59,6 +64,8 @@ const AuthProvider = ({ children }) => {
             setIsAuthenticated,
             errorMessage,
             setErrorMessage,
+            loading,
+            setLoading,
 
             signinRequest,
         }}>

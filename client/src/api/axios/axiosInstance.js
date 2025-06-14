@@ -1,4 +1,5 @@
 import { axios } from "../../utils/libs";
+import apiEndPoints from "../apiEndPoints";
 
 
 const axiosInstance = axios.create({
@@ -30,8 +31,14 @@ axiosInstance.interceptors.response.use(
     async error => {
         const originalRequest = error.config;
 
-        if (error?.response?.status === 401 && !originalRequest._retry) {
+        console.log('outside');
+        console.log(error?.response.data.error.type);
+
+
+        if (error?.response?.data?.error?.type === "TokenExpiredError" && !originalRequest._retry) {
             originalRequest._retry = true;
+
+            console.log('inside');
 
             if (isRefreshing) {
                 return new Promise((resolve, reject) => {
@@ -45,7 +52,7 @@ axiosInstance.interceptors.response.use(
 
             try {
                 await axiosInstance.post(
-                    'auth/refresh',
+                    apiEndPoints.refreshAccessToken,
                     {},
                 );
                 processPendingRequests(null);

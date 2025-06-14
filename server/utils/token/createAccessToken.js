@@ -1,12 +1,12 @@
 const { badRequestError } = require('../errors')
 const { dotenv, jwt } = require("../libs");
 
-const createAccessToken = ({id, username}) => {
+const createAccessToken = (id) => {
     return jwt.sign(
-        { id, username },
+        { id },
         process.env.SECRET_KEY,
         {
-            expiresIn: '7m',
+            expiresIn: '3s', /** cause some errors when process.env is used */
         }
     )
 }

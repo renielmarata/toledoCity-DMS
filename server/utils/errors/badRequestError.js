@@ -1,9 +1,10 @@
 class BadRequestError extends Error {
-    constructor(message, details=null) {
+    constructor(message, type, details) {
         super(message);
         this.name = 'BadRequestError';
+        this.type = type;
+        this.statusCode = 400;
         this.details = details;
-        this.code = 400;
 
         Error.captureStackTrace(this, this.constructor);
     }

@@ -22,7 +22,7 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 
 /** context */
-import { useAuthContext } from "../../../context/auth/authProvider";
+import { UseAuthContext } from "../../../context/auth/authProvider";
 
 const SigninFormContainer = styled(Container)(({ theme }) => ({
   padding: "30px 0px",
@@ -42,23 +42,25 @@ const CustomLink = styled(Link)(() => ({
 }));
 
 const SigninForm = () => {
-  const { errorMessage, signinRequest } = useAuthContext();
+  const { errorMessage, signinRequest } = UseAuthContext();
   const navigate = useNavigate();
   const [showPass, setShowPass] = useState(false);
 
   const signinSchema = Yup.object({
     username: Yup.string()
-      .typeError("invalid text")
-      .min(5, "at least 5 characters")
-      .max(20, "maximum of 20 characters")
+      .typeError("Invalid username")
+      .min(5, "Atleast 5 characters")
+      .max(20, "Maximum of 20 characters")
       .trim()
-      .required("username is required"),
+      .required("Username is required")
+      .matches(/^[A-Za-z]+$/, "Invalid username"),
     password: Yup.string()
-      .typeError("invalid text")
-      .min(5, "at least 5 characters")
-      .max(20, "maximum of 20 characters")
+      .typeError("Invalid username")
+      .min(5, "Atleast 5 characters")
+      .max(20, "Maximum of 20 characters")
       .trim()
-      .required("password is required"),
+      .required("Password is required")
+      .matches(/^[A-Za-z0-9]+$/, "Letters and number only allowed"),
   });
 
   return (

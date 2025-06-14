@@ -1,58 +1,59 @@
-const { jwt } = require("../../utils/libs");
+const { jwt, dotenv } = require("../../utils/libs");
 const userModel = require("../../models/user/userModel");
-const { findUser } = require("../../services");
-const { notFoundError } = require("../../utils/errors");
+const { authenticateUser, getUser } = require("../../services");
+const { notFoundError, unauthorizedError } = require("../../utils/errors");
 const { createAccessToken, createRefreshToken } = require("../../utils/token");
 const { cookieNames } = require("../../config");
 
 const signinController = async (req, res, next) => {
-    try {
-        const { username, password } = req.body;
-        
-        const user = await findUser(username, password);
+     try {
+        // check username and password
+        console.log('2 -> received in signin controller');
+
+        const { username, password } = req.signinCredentials;
+
+        const user = await authenticateUser(username, password);
 
         if (!user) {
-            throw new notFoundError(
-                "Wrong username or password",
-                "Given credentials do not match any user",
-            );
+         throw new unauthorizedError(
+            'Invalid username or password', // message
+            'INVALID_CREDENTIALS', // type
+            'signin credentials validation failed', // details
+         )
         }
 
-        if (!user.id || !user.username) {
-            throw new notFoundError(
-                "User credentials not Found",
-                "User credentials needed for token creation not found",
-            )
-        }
+        // create access token
+        // create refresh token
+
+        const accessToken = createAccessToken(user._id);
+        const refreshToken = createRefreshToken(user._id, user.username);
 
 
-        const accessToken = createAccessToken(user);
-        const refreshToken = createRefreshToken(user);
 
         res.cookie(cookieNames.ACCESS_TOKEN, accessToken, {
-            httpOnly: true,
-            securet: process.env.NODE_ENV === "production",
-            sameSite: true,
-            maxAge: 3 * 60 * 60 * 1000,
+         httpOnly: true,
+         //secure: process.env.NODE_ENV === 'production',
+         //sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+         maxAge: 30 * 1000,
         })
 
         res.cookie(cookieNames.REFRESH_TOKEN, refreshToken, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === "production",
-            sameSite: true,
-            maxAge: 7 * 24 * 60 * 60 * 1000,
+         httpOnly: true,
+         //secure: process.env.NODE_ENV === 'production',
+         //sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+         maxAge: 30 * 60 * 1000,
         })
-        
+
+        console.log('3 -> responded statusCode 200');
 
         return res.status(200).json({
-            success: true,
-            message: 'User signed in successfully',
+         success: true,
+         message: 'successfully authenticated',
         })
 
-
-    } catch (err) {
+     } catch (err) {
         next(err);
-    }
+     }
 }
 
 module.exports = signinController;

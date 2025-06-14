@@ -1,9 +1,10 @@
 class NotFoundError extends Error {
-    constructor(message, details) {
+    constructor(message, type, details) {
         super(message);
         this.name = 'NotFoundError';
+        this.type = type;
+        this.statusCode = 404;
         this.details = details;
-        this.code = 404;
         
 
         Error.captureStackTrace(this, this.constructor);
