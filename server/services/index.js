@@ -1,6 +1,7 @@
-const findUser = require("./auth/findUser");
+// user
+const authenticateUser = require("./user/authenticateUser.js");
 
 
 module.exports = {
-    findUser,
+    authenticateUser,
 }

@@ -1,6 +1,5 @@
 const { dbConnect } = require("./config");
-const { signinController, checkAuthController } = require("./controllers");
-const { errorHandler } = require("./middleware");
+const { signinRouter } = require("./router");
 const { express, dotenv, cookieParser, helmet, cors } = require("./utils/libs");
 
 
@@ -23,12 +22,7 @@ const startServer = async () => {
 
         
         /** Routes */
-
-        app.post('/auth/signin', signinController);
-        app.post('/auth/checkAuth', checkAuthController);
-
-        app.use(errorHandler);
-
+        app.use(signinRouter);
 
 
         app.listen(process.env.PORT || 5000, ()=>{
@@ -37,7 +31,8 @@ const startServer = async () => {
 
     } catch (err) {
         console.log(err);
-        // send error response here
+        process.exit(1);
+        // -fix and some response here
     }
 }
 

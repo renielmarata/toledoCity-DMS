@@ -1,9 +1,7 @@
-const checkAuthController = require("./auth/checkAuthController");
-const signinController = require("./auth/signinController");
+const signinController = require("./auth/signinController.js");
 
 
 
 module.exports = {
-    checkAuthController,
     signinController,
 }
