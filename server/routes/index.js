@@ -1,11 +1,11 @@
 /** auth */
 const checkAuthRouter = require("./auth/checkAuthRouter");
-const refreshRouter = require("./auth/refreshRouter");
+const refreshAccessTokenRouter = require("./auth/refreshAccessTokenRouter");
 const signinRouter = require("./auth/signinRouter");
 
 
 module.exports = {
     checkAuthRouter,
-    refreshRouter,
+    refreshAccessTokenRouter,
     signinRouter,
 }

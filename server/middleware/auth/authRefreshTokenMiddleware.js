@@ -3,17 +3,19 @@ const { verifyRefreshToken } = require("../../utils/token");
 const { cookieNames } = require("../../config");
 
 
-const authRefreshToken = async (req, res, next) => {
+const authRefreshTokenMiddleware = async (req, res, next) => {
     try {
 
+        console.log("1 -> authRefreshToken middleware");
         const token = req?.cookies?.[cookieNames.REFRESH_TOKEN];
 
         if (!token) {
-            console.log("access token not found");
+            console.log("refresh token not found");
 
             throw new unauthorizedError(
-                'refresh token not found',
-                'refresh token is not found during authentication',
+                'refresh token not found', // message
+                'REFRESH_TOKEN_MISSING', // type
+                'refresh token is not found during authentication', // details
             );
         }
 
@@ -21,14 +23,16 @@ const authRefreshToken = async (req, res, next) => {
         try {
             const decoded = verifyRefreshToken(token);
             req.user = decoded;
-            console.log(decoded);
 
         } catch (err) {
             throw new unauthorizedError(
                 err.name === "TokenExpiredError" ? "Refresh Token Expired" : "Invalid Token",
-                "refresh token validation failed"
+                err.name,
+                "token validation failed",
             )
         }
+
+        return next();
 
     } catch (err) {
         return next(err);
@@ -36,4 +40,4 @@ const authRefreshToken = async (req, res, next) => {
 }
 
 
-module.exports = authRefreshToken;
+module.exports = authRefreshTokenMiddleware;

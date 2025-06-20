@@ -1,5 +1,5 @@
 const userModel  = require("../../models/user/userModel");
-const { bcrypt } = require("../../utils/libs");
+const { bcrypt, dotenv } = require("../../utils/libs");
 
 const authenticatedUser = async (username, password) => {
 
@@ -9,7 +9,9 @@ const authenticatedUser = async (username, password) => {
         return null;
     }
 
+
     const isMatch = await bcrypt.compare(password, user?.password);
+    
 
     return isMatch ? user : null;
 

@@ -7,6 +7,7 @@ const validatorMiddleware = (schema) => (req, res, next) => {
         const { error } = schema.validate(req.body, { abortEarly: true });
 
         if (error) {
+            console.log(error);
             throw new unauthorizedError(
                 "Invalid username or password", // message parameter
                 error.name, // error type parameter
@@ -18,6 +19,7 @@ const validatorMiddleware = (schema) => (req, res, next) => {
         }
 
     } catch (err) {
+        console.log("3 -> signin schema error");
         next(err);
     }
 }

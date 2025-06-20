@@ -6,6 +6,8 @@ const { cookieNames } = require("../../config");
 const authAccessToken = async (req, res, next) => {
     try {
 
+        console.log("1 -> authAccessToken middleware");
+
         const token = req?.cookies?.[cookieNames.ACCESS_TOKEN];
 
         if (!token) {
@@ -22,14 +24,14 @@ const authAccessToken = async (req, res, next) => {
         try {
             const decoded = verifyAccessToken(token);
             req.user = decoded;
-            console.log('valid access token');
+            console.log('2 -> valid access token added to req.user');
             return next();
 
         } catch (err) {
-            console.log(err.name);
             throw new unauthorizedError(
                 err.name === "TokenExpiredError" ? "Access Token Expired" : "Invalid Token",
-                "access token validation failed"
+                err.name,
+                "token valiation failed",
             )
         }
 

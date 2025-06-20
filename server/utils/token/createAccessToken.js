@@ -6,9 +6,10 @@ const createAccessToken = (id) => {
         { id },
         process.env.SECRET_KEY,
         {
-            expiresIn: '3s', /** cause some errors when process.env is used */
+            expiresIn: process.env.ACCESS_TOKEN_EXPIRES_IN,
         }
     )
+
 }
 
 

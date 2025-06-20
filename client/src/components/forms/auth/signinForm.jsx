@@ -72,6 +72,7 @@ const SigninForm = () => {
         validateOnChange={false}
         onSubmit={async (values) => {
           const res = await signinRequest(values);
+          console.log(res);
           if (res.status === 200 && res.data.success) {
             navigate("/client/dashboard");
           }

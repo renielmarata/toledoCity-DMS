@@ -9,12 +9,12 @@ const errorHandlerMiddleware = (err, req, res, next) => {
 
 
 
-    return res.status(err.code || 500).json({
+    return res.status(err.statusCode || 500).json({
         success: false,
         error: {
-            type: err.type,
-            code: err.code,
-            message: err.message,
+            type: err.type || 'InternalServerError',
+            code: err.code || 500,
+            message: err.message || "Internal Server Error",
         }
     })
     

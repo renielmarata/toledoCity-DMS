@@ -17,6 +17,7 @@ const AuthProvider = ({ children }) => {
         const checkAuth = async () => {
             try {
                 const res = await checkAuthService();
+                console.log(res);
                 if (res.status === 200) {
                     setIsAuthenticated(true);
                     console.log("isAuthenticated is set to -> "+isAuthenticated);

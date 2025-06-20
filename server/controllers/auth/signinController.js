@@ -22,8 +22,7 @@ const signinController = async (req, res, next) => {
          )
         }
 
-        // create access token
-        // create refresh token
+      
 
         const accessToken = createAccessToken(user._id);
         const refreshToken = createRefreshToken(user._id, user.username);
@@ -32,16 +31,16 @@ const signinController = async (req, res, next) => {
 
         res.cookie(cookieNames.ACCESS_TOKEN, accessToken, {
          httpOnly: true,
-         //secure: process.env.NODE_ENV === 'production',
-         //sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-         maxAge: 30 * 1000,
+         secure: process.env.NODE_ENV === 'production',
+         sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+         maxAge: 30 * 60 * 1000,
         })
 
         res.cookie(cookieNames.REFRESH_TOKEN, refreshToken, {
          httpOnly: true,
-         //secure: process.env.NODE_ENV === 'production',
-         //sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
-         maxAge: 30 * 60 * 1000,
+         secure: process.env.NODE_ENV === 'production',
+         sameSite: process.env.NODE_ENV === 'production' ? 'strict' : 'lax',
+         maxAge: 7 * 24 * 60 * 60 * 1000,
         })
 
         console.log('3 -> responded statusCode 200');

@@ -32,7 +32,7 @@ axiosInstance.interceptors.response.use(
         const originalRequest = error.config;
 
         console.log('outside');
-        console.log(error?.response.data.error.type);
+        console.log(error);
 
 
         if (error?.response?.data?.error?.type === "TokenExpiredError" && !originalRequest._retry) {
@@ -51,8 +51,9 @@ axiosInstance.interceptors.response.use(
             isRefreshing = true;
 
             try {
+                console.log(apiEndPoints.refreshAccessToken);
                 await axiosInstance.post(
-                    apiEndPoints.refreshAccessToken,
+                    "/auth/refreshAccessToken",
                     {},
                 );
                 processPendingRequests(null);
@@ -63,6 +64,8 @@ axiosInstance.interceptors.response.use(
             } finally {
                 isRefreshing = false;
             }
+        } else {
+            console.log("Token are not found");
         }
 
         return Promise.reject(error);
