@@ -14,7 +14,7 @@ const authRefreshTokenMiddleware = async (req, res, next) => {
 
             throw new unauthorizedError(
                 'refresh token not found', // message
-                'REFRESH_TOKEN_MISSING', // type
+                'REFRESH_TOKEN_MISSING_ERROR', // type
                 'refresh token is not found during authentication', // details
             );
         }

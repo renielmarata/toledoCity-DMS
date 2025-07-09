@@ -15,7 +15,7 @@ const authAccessToken = async (req, res, next) => {
 
             throw new unauthorizedError(
                 'access token not found', // message
-                'ACCESS_TOKEN_MISSING', // type
+                'ACCESS_TOKEN_MISSING_ERROR', // type
                 'access token is not found during authentication', // details
             );
         }
